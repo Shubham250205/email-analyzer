@@ -1,0 +1,19 @@
+From: Security Test <security-test@example.com>
+To: Analyst <analyst@example.net>
+Date: Thu, 22 Oct 2026 10:00:00 +0000
+Subject: Sample Email for Email Analyzer Testing
+Message-ID: <sample-test-001@example.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+
+Hello,
+
+This is a harmless sample email created to test an Email Analyzer application's .eml parser.
+
+Test details:
+- Sender domain: example.com
+- No links or attachments are included.
+- This message is for local software testing only.
+
+Regards,
+Security Test

@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: email-analyzer-shubham
+    runtime: python
+    plan: free
+    buildCommand: bash build.sh
+    startCommand: gunicorn email_analyzer.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DATABASE_URL
+        sync: false
