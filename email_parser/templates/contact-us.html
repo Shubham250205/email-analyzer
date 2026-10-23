@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Contact Us | Email Analyzer{% endblock title %}
+
+{% block css %}
+<style>
+.contact-card { max-width: 760px; margin: 0 auto; padding: 28px; background: #fff; border-radius: 18px; box-shadow: var(--shadow); }
+.contact-card h1 { margin-bottom: 8px; }
+.contact-card .intro { margin-bottom: 24px; color: #64748b; }
+.contact-card .field { margin-bottom: 18px; }
+.contact-card .field label { display: block; margin-bottom: 7px; font-weight: 600; }
+.contact-card .field input, .contact-card .field textarea { width: 100%; }
+.field-errors { color: #9f1239; font-size: .9rem; margin-top: 5px; }
+</style>
+{% endblock css %}
+
+{% block main-body %}
+<section class="container page-content">
+    <div class="contact-card">
+        <h1>Contact Us</h1>
+        <p class="intro">Have a question or feedback? Send us a message.</p>
+        <form method="post" action="{% url 'contact' %}">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="field">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}<div class="field-errors">{{ field.errors|striptags }}</div>{% endif %}
+            </div>
+            {% endfor %}
+            <button class="btn btn-primary" type="submit">Submit Message</button>
+        </form>
+    </div>
+</section>
+{% endblock main-body %}

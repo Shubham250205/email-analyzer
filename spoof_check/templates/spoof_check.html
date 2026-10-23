@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Spoof Check | Email Analyzer{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'spoof_check/css/styles.css' %}">
+{% endblock css %}
+
+{% block main-body %}
+<section class="container page-content spoof-page">
+    <div class="page-intro">
+        <span class="eyebrow">EMAIL AUTHENTICATION</span>
+        <h1>Email Spoof Check</h1>
+        <p id="brief">Check whether a domain publishes SPF and DMARC records that help reduce email address impersonation. Enter a domain to inspect its public configuration.</p>
+    </div>
+
+    <form method="post" id="domain-form" class="spoof-form">
+        {% csrf_token %}
+        <input type="text" name="host" id="hostAddr" placeholder="E.g. google.com" required>
+        <button type="submit" class="btn btn-primary">Check Domain</button>
+    </form>
+
+    <div class="spinner-overlay" id="spinnerOverlay" aria-live="polite" aria-label="Checking spoofing configuration">
+        <div class="spinner-border" role="status"></div>
+        <p>Checking SPF and DMARC…</p>
+    </div>
+
+    {% if error %}<div class="alert alert-error" role="alert">{{ error }}</div>{% endif %}
+
+    {% if records %}
+    <section class="spoof-result">
+        <div class="result-status {% if records.spoofable %}is-risky{% else %}is-protected{% endif %}">
+            Domain email configuration is {% if records.spoofable %}potentially spoofable{% else %}configured with the checked protections{% endif %}.
+        </div>
+        <ul>
+            <li><strong>Domain:</strong> {{ records.domain }}</li>
+            <li><strong>Has SPF record:</strong> {{ records.spf }}</li>
+            <li><strong>SPF details:</strong> {{ records.spf_details|default:"Not found" }}</li>
+            <li><strong>SPF uses ~all or -all:</strong> {{ records.spf_all_present }}</li>
+            <li><strong>Has DMARC record:</strong> {{ records.dmarc }}</li>
+            <li><strong>DMARC details:</strong> {{ records.dmarc_details|default:"Not found" }}</li>
+            <li><strong>DMARC has reject policy:</strong> {{ records.dmarc_enforced }}</li>
+            <li><strong>Potentially spoofable by this check:</strong> {{ records.spoofable }}</li>
+        </ul>
+    </section>
+    {% endif %}
+</section>
+{% endblock main-body %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('domain-form');
+    const overlay = document.getElementById('spinnerOverlay');
+    if (form && overlay) form.addEventListener('submit', function () { overlay.style.display = 'flex'; });
+});
+</script>
+{% endblock scripts %}

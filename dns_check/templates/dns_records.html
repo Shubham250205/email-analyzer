@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}DNS Check | Email Analyzer{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'dns_check/css/styles.css' %}">
+{% endblock css %}
+
+{% block main-body %}
+<section class="container page-content dns-page">
+    <div class="page-intro">
+        <span class="eyebrow">DOMAIN LOOKUP TOOL</span>
+        <h1>DNS Checker</h1>
+        <p id="brief">This online tool checks DNS records for a domain. Enter a domain below to review A, AAAA, CNAME, MX, TXT and other records, and help diagnose DNS configuration issues.</p>
+    </div>
+
+    <form method="post" id="domain-form" class="dns-form">
+        {% csrf_token %}
+        <input type="text" name="domain" id="domain" placeholder="E.g. google.com" autocomplete="url" required>
+        <button type="submit" class="btn btn-primary">Check Domain</button>
+    </form>
+
+    <div class="spinner-overlay" id="spinnerOverlay" aria-live="polite" aria-label="Checking DNS records">
+        <div class="spinner-border" role="status"></div>
+        <p>Checking DNS records…</p>
+    </div>
+
+    {% if records %}
+    <section class="dns-record-card result-card">
+        <h2 class="card-header">DNS Records for {{ domain }}</h2>
+        <ul>
+            {% for key, value in records.items %}
+            <li><strong>{{ key }}:</strong> {% for item in value %}{{ item }}{% if not forloop.last %}, {% endif %}{% empty %}No records found{% endfor %}</li>
+            {% endfor %}
+        </ul>
+    </section>
+    {% endif %}
+</section>
+{% endblock main-body %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('domain-form');
+    const overlay = document.getElementById('spinnerOverlay');
+    if (form && overlay) {
+        form.addEventListener('submit', function () { overlay.style.display = 'flex'; });
+    }
+});
+</script>
+{% endblock scripts %}

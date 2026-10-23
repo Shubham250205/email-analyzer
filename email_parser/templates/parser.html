@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}EML Parser | Email Analyzer{% endblock title %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'email_analyzer/css/parser/styles.css' %}">
+{% endblock css %}
+
+{% block main-body %}
+<section class="container page-content parser-page">
+    <div class="page-intro">
+        <span class="eyebrow">EMAIL SECURITY TOOLKIT</span>
+        <h1>Upload EML File for Analysis</h1>
+        <p>Inspect email headers, URLs, attachments, and sender authentication details.</p>
+    </div>
+
+    <form id="analyzeForm" class="upload-card" method="post" enctype="multipart/form-data" action="{% url 'analyze' %}">
+        {% csrf_token %}
+        <label for="eml_file">Choose an email file (.eml)</label>
+        <input type="file" id="eml_file" name="eml_file" accept=".eml,message/rfc822" required>
+        <p class="field-help">Maximum file size: 10 MB.</p>
+        <button type="submit" class="btn btn-primary">Analyze Email</button>
+    </form>
+</section>
+
+<div class="spinner-overlay" id="spinnerOverlay" aria-live="polite" aria-label="Analyzing email">
+    <div class="spinner-border" role="status"></div>
+    <p>Analyzing your email…</p>
+</div>
+{% endblock main-body %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('analyzeForm');
+    const overlay = document.getElementById('spinnerOverlay');
+    if (form && overlay) {
+        form.addEventListener('submit', function () {
+            overlay.style.display = 'flex';
+        });
+    }
+});
+</script>
+{% endblock scripts %}

@@ -1,0 +1,12 @@
+.spoof-page { max-width: 1100px; padding-top: 42px; padding-bottom: 34px; }
+.spoof-page .page-intro p { max-width: 1000px; }
+.spoof-form { max-width: 720px; margin: 22px auto 30px; text-align: center; }
+.spoof-form input[type="text"] { max-width: 350px; height: 50px; margin: 0 auto; padding: 12px 16px; background: #fff; border-radius: 11px; }
+.spoof-form button { margin-top: 18px; min-width: 160px; }
+.spoof-result { margin-top: 25px; overflow: hidden; background: #fff; border-radius: 16px; box-shadow: var(--shadow); }
+.spoof-result .result-status { padding: 14px 18px; font-weight: 700; }
+.spoof-result .is-risky { color: #9f1239; background: #fff1f2; }
+.spoof-result .is-protected { color: #166534; background: #f0fdf4; }
+.spoof-result ul { margin: 0; padding: 18px 38px; }
+.spoof-result li { padding: 7px 0; overflow-wrap: anywhere; }
+@media (max-width: 768px) { .spoof-page { padding-top: 24px; } .spoof-form input[type="text"] { max-width: 100%; } }

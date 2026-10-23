@@ -1,0 +1,17 @@
+.dns-page { max-width: 1320px; padding-top: 42px; padding-bottom: 34px; }
+.dns-page .page-intro { margin-bottom: 20px; }
+.dns-page .page-intro h1 { text-align: center; }
+.dns-page .page-intro p { max-width: 1250px; text-align: center; }
+.dns-form { max-width: 720px; margin: 22px auto 30px; text-align: center; }
+.dns-form input[type="text"] { max-width: 350px; height: 50px; margin: 0 auto; padding: 12px 16px; background: #fff; border-radius: 11px; }
+.dns-form button { margin-top: 18px; min-width: 160px; }
+.dns-record-card { margin-top: 24px; }
+.dns-record-card ul { margin: 0; padding: 18px 32px; background: #fff; }
+.dns-record-card li { padding: 8px 0; overflow-wrap: anywhere; }
+.dns-page .eyebrow { color: #f5eaff; }
+.dns-page .spinner-overlay { z-index: 9999; }
+@media (max-width: 768px) {
+    .dns-page { padding-top: 24px; }
+    .dns-form { padding: 0 8px; }
+    .dns-form input[type="text"] { max-width: 100%; }
+}
